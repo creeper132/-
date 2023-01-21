@@ -1,0 +1,124 @@
+ 
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{margin: 0px;padding: 0px;}
+        li{list-style: none;}
+        body{
+            user-select:none;
+            background: url('1.jpg') no-repeat;
+            background-size: 100%;
+            /*background-color: red;*/
+        }
+        .section{
+            position: relative;
+            width:300px;
+            height: 75px;
+            background-color: rgb(55, 48, 48);
+            margin:500px auto 0;
+            text-align: center;
+        }
+        .section h2{
+            height: 90px;
+            line-height: 90px;
+            font-size: 20px;
+            color:rgb(249, 249, 249);
+        }
+        .section .s-result{
+            height: 80px;
+            margin-top: -300px;
+            color: rgb(227, 29, 29);
+        }
+        .s-result .number{
+            float: left;
+            width: 225px;
+            height: 75px;
+            line-height: 300px;
+            margin-left: 40px;
+            font-size: 30px;
+            margin-top: -115px;
+            font-weight: bold;
+        }
+        .btn{
+            position:absolute;
+            left: 50%;
+            margin-left: -75px;
+            bottom: -40px;
+            width: 150px;
+            height: 30px;
+            border-radius: 30px;
+            background-color: #000;
+            cursor:pointer;
+        }
+        .btn p{
+            line-height: 30px;
+            font-size: 10px;
+            color: #fff;
+        }
+    </style>
+</head>
+<body>
+    <div class="section">
+        <div class="s-result">
+        </div>
+        <div class="btn">
+            <p>点 击 抽 签</p>
+        </div>
+    </div>
+    <script>
+        var oBtn = document.getElementsByClassName('btn')[0];
+        var oResult = document.getElementsByClassName('s-result')[0];
+        var arrName = ['八方来财','事业有成','身体健康','心想事成','天天开心','财务自由'];         //抽签的内容
+        var step = 1;
+        var cnt = 1;
+        var flag = true;
+        oBtn.onclick = function (){
+            if(flag){
+                step = 1;
+                creatName();
+                flag = false;
+            }else{
+                var d =  document.getElementsByClassName('number')[0];
+                oResult.removeChild(d);
+                step = 1;
+                creatName();
+            }
+        }
+        function getName(){
+            var num = Math.floor(Math.random()*(arrName.length-1));
+            var n = arrName[num];
+            arrName.splice(num,1);
+            return n;
+        }
+        function creatName(){
+            if(step > cnt){
+                return null;
+            }
+            step++;
+            
+            var oDiv = document.createElement('div');
+            oDiv.className = 'number';
+            
+            oResult.appendChild(oDiv);
+            
+            var dis = 1;
+            var maxDis = 30;
+            var mySet = setInterval(function(){
+                dis++;
+                if(dis > maxDis){
+                    oDiv.innerHTML = getName();
+                    clearInterval(mySet);
+                    creatName();
+                    return null;
+                }
+                oDiv.innerHTML = arrName[Math.floor(Math.random()*(arrName.length-1))];
+            },50);
+        }
+    </script>
+</body>
+</html>
